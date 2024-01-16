@@ -38,12 +38,12 @@ export const Tag = (props) => {
     );
 };
 
-export const conditionalTag = (selectedItems: ItemWrapper[]) => {
+export const conditionalTag = (selectedItems: ItemWrapper[], TagComponent: (props: any) => JSX.Element) => {
     return (props) => {
         const { tagData } = props;
         const [item] = tagData.data as ItemWrapper[];
         const shouldRender = !item.parent || !selectedItems.includes(item.parent);
 
-        return shouldRender ? <Tag {...props} /> : null;
+        return shouldRender ? <TagComponent {...props} /> : null;
     };
 };

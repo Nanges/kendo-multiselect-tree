@@ -1,6 +1,6 @@
 import { getMultiSelectTreeValue, MultiSelectTree, MultiSelectTreeChangeEvent } from '@progress/kendo-react-dropdowns';
 import { useCallback, useEffect, useMemo, useState } from 'react';
-import { conditionalTag } from './rendering';
+import { conditionalTag, Tag } from './rendering';
 import { fetchData, ItemWrapper } from './tree-data';
 import { expandedState, processMultiSelectTreeData } from './tree-data-ops';
 
@@ -54,7 +54,7 @@ function App() {
     };
 
     // Create dynamic component using kind of HoC
-    const Tag = conditionalTag(value);
+    const EnhancedTag = conditionalTag(value, Tag);
 
     return (
         <>
@@ -75,7 +75,7 @@ function App() {
                     expandField={expandField}
                     onExpandChange={onExpandChange}
                     label={'Category'}
-                    tag={Tag}
+                    tag={EnhancedTag}
                 />
             </fieldset>
         </>
