@@ -31,9 +31,9 @@ export const Tag = (props) => {
                 {tagData.data[0].id}
             </span>
             <span>{tagData.text}1</span>
-            <span aria-label="delete" className="k-select" onClick={(e) => onTagDelete.call(undefined, tagData.data, e)}>
-                <span className="k-icon k-i-close" />
-            </span>
+            <button aria-label="delete" className="k-select" onClick={(e) => onTagDelete.call(undefined, tagData.data, e)}>
+                &times;
+            </button>
         </li>
     );
 };

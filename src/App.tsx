@@ -1,5 +1,7 @@
 import { getMultiSelectTreeValue, MultiSelectTree, MultiSelectTreeChangeEvent } from '@progress/kendo-react-dropdowns';
 import { useCallback, useEffect, useMemo, useState } from 'react';
+import { FilesButton } from './file-button';
+import { FormField, Input, Label } from './form-field';
 import { conditionalTag, Tag } from './rendering';
 import { fetchData, ItemWrapper } from './tree-data';
 import { expandedState, processMultiSelectTreeData } from './tree-data-ops';
@@ -44,13 +46,20 @@ function App() {
 
     // Handlers
     const onChange = (event: MultiSelectTreeChangeEvent) => {
-        setValue(
-            getMultiSelectTreeValue(data, {
-                ...fields,
-                ...event,
-                value,
-            } as any)
-        );
+        const newValue: ItemWrapper[] = getMultiSelectTreeValue(data, {
+            ...fields,
+            ...event,
+            value,
+        } as any);
+
+        if (event.operation === 'delete') {
+            const [deleted] = event.items as ItemWrapper[];
+            setValue(newValue.filter((v) => v.parent !== deleted));
+
+            return;
+        }
+
+        setValue(newValue);
     };
 
     // Create dynamic component using kind of HoC
@@ -78,6 +87,18 @@ function App() {
                     tag={EnhancedTag}
                 />
             </fieldset>
+            <FilesButton filesSelected={console.log} accept=".docx" style={{ display: 'inline-block', padding: '8px 16px' }}>
+                Select file
+            </FilesButton>
+            <FormField className="mb-200">
+                <Label>nom</Label>
+                <Input type="text" />
+            </FormField>
+            <FormField className="mb-200">
+                <Label>prenom</Label>
+                <Input type="text" />
+                <p>Foo</p>
+            </FormField>
         </>
     );
 }
